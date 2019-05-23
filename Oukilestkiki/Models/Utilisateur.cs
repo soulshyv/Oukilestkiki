@@ -11,7 +11,7 @@ namespace Oukilestkiki.Models
         public string Password { get; set; }
         public string Mail { get; set; }
         public bool Suspendu { get; set; } = false;
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
         public List<Message> Messages { get; set; }
     }
 }

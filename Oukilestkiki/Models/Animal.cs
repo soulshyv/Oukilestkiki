@@ -7,5 +7,6 @@
         public string Couleur { get; set; }
         public int Age { get; set; }
         public TypeAnimal Type { get; set; }
+        public Utilisateur Maitre { get; set; }
     }
 }

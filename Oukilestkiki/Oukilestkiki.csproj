@@ -134,6 +134,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TypeAnimalsController.cs" />
+    <Compile Include="Controllers\UtilisateursController.cs" />
     <Compile Include="Enums\TypeMessageEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -141,6 +143,10 @@
     <Compile Include="Migrations\201905231020340_init.cs" />
     <Compile Include="Migrations\201905231020340_init.Designer.cs">
       <DependentUpon>201905231020340_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905231156391_AddAnimalMaitre.cs" />
+    <Compile Include="Migrations\201905231156391_AddAnimalMaitre.Designer.cs">
+      <DependentUpon>201905231156391_AddAnimalMaitre.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Animal.cs" />
@@ -150,6 +156,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\TypeAnimal.cs" />
     <Compile Include="Models\Utilisateur.cs" />
+    <Compile Include="Models\UtilisateurCreateEditVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +196,17 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\TypeAnimals\Create.cshtml" />
+    <Content Include="Views\TypeAnimals\Delete.cshtml" />
+    <Content Include="Views\TypeAnimals\Details.cshtml" />
+    <Content Include="Views\TypeAnimals\Edit.cshtml" />
+    <Content Include="Views\TypeAnimals\Index.cshtml" />
+    <Content Include="Views\Utilisateurs\Create.cshtml" />
+    <Content Include="Views\Utilisateurs\Delete.cshtml" />
+    <Content Include="Views\Utilisateurs\Details.cshtml" />
+    <Content Include="Views\Utilisateurs\Edit.cshtml" />
+    <Content Include="Views\Utilisateurs\Index.cshtml" />
+    <Content Include="Views\Utilisateurs\Inscription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -209,6 +227,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201905231020340_init.resx">
       <DependentUpon>201905231020340_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905231156391_AddAnimalMaitre.resx">
+      <DependentUpon>201905231156391_AddAnimalMaitre.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
