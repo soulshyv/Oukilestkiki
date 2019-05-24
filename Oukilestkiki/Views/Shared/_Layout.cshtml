@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using BO
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -21,12 +22,28 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Gestion type animaux", "Index", "TypeAnimals")</li>
-                    <li>@Html.ActionLink("Gestion des Membres", "Index", "Utilisateurs")</li>
-                    <li>@Html.ActionLink("S'inscrire", "Inscription", "Utilisateurs")</li>
+                    @if (Session["Utilisateur"] == null)
+                    {
+                        <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
+                        <li>@Html.ActionLink("S'inscrire", "Inscription", "Utilisateurs")</li>
+                        <li>@Html.ActionLink("Connexion", "Login", "Login")</li>
+                    }
+                    else
+                    {
+                        var user = (Utilisateur)Session["Utilisateur"];
+                        if (user.Role.Libelle.Equals("Admin"))
+                        {
+                            <li>@Html.ActionLink("Gestion type animaux", "Index", "TypeAnimals")</li>
+                            <li>@Html.ActionLink("Gestion des Membres", "Index", "Utilisateurs")</li>
+                            <li>@Html.ActionLink("Modifier son profil", "EditProfil", "Utilisateurs")</li>
+                            <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Login")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Modifier son profil", "EditProfil", "Utilisateurs")</li>
+                            <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Login")</li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
