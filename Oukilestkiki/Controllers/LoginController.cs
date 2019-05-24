@@ -22,9 +22,15 @@ namespace Oukilestkiki.Controllers
             var userConnect = db.Utilisateurs.FirstOrDefault(user => user.Mail == utilisateur.Mail);
             if (userConnect.Password == utilisateur.Password)
             {
+                Session["Utilisateur"] = userConnect;
                 return RedirectToAction("Index", "Home");
             }
 
+            return RedirectToAction("Login");
+        }
+        public ActionResult Deconnexion(Utilisateur utilisateur)
+        {
+            Session["Utilisateur"] = null;
             return RedirectToAction("Login");
         }
     }

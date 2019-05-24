@@ -46,10 +46,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -148,6 +148,10 @@
     <Compile Include="Migrations\201905231156391_AddAnimalMaitre.Designer.cs">
       <DependentUpon>201905231156391_AddAnimalMaitre.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905241239416_addAnnotation.cs" />
+    <Compile Include="Migrations\201905241239416_addAnnotation.Designer.cs">
+      <DependentUpon>201905241239416_addAnnotation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\UtilisateurCreateEditVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,6 +205,7 @@
     <Content Include="Views\Utilisateurs\Index.cshtml" />
     <Content Include="Views\Utilisateurs\Inscription.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\Erreur.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -225,15 +230,14 @@
     <EmbeddedResource Include="Migrations\201905231156391_AddAnimalMaitre.resx">
       <DependentUpon>201905231156391_AddAnimalMaitre.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905241239416_addAnnotation.resx">
+      <DependentUpon>201905241239416_addAnnotation.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BO\BO.csproj">
-      <Project>{88FCDDEE-DD2E-4D63-9043-ADD30F23B37E}</Project>
+      <Project>{88fcddee-dd2e-4d63-9043-add30f23b37e}</Project>
       <Name>BO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PhotosService\PhotosService.csproj">
-      <Project>{7bb7b2cc-d6ab-4a7b-9744-363620941fb5}</Project>
-      <Name>PhotosService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
