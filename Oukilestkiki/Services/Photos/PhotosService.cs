@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using Oukilestkiki.Models;
 using Oukilestkiki.ViewModels;
 using WebGrease.Css.Extensions;
@@ -10,30 +14,38 @@ namespace Oukilestkiki.Services.Photos
     {
         private Context db = new Context();
 
-        public Photo Add(PhotoRechercheModel prm)
+        public List<Photo> Add(PhotoRechercheModel prm)
         {
-            if (prm.Photo == null)
+            if (!prm.Photos.Any())
             {
                 return null;
             }
 
-            var photo = UploaderService.Upload(prm.Photo);
-            if (photo == null)
+            var photos = new List<Photo>();
+
+            foreach (var p in prm.Photos)
             {
-                return null;
+                var photo = FileManagerService.Upload(p);
+                if (photo == null)
+                {
+                    return null;
+                }
+
+                if (prm.Recherche != null)
+                {
+                    photo.Recherches.Add(prm.Recherche);
+                }
+
+                photo.Animal = prm.Animal;
+
+                db.Photos.Add(photo);
+
+                photos.Add(photo);
             }
 
-            if (prm.Recherche != null)
-            {
-
-            }
-
-            photo.Animal = prm.Animal;
-
-            db.Photos.Add(photo);
             db.SaveChanges();
 
-            return photo;
+            return photos;
         }
 
         public void UpdatePhotosRecherche(List<Photo> photos, Recherche r)
@@ -98,6 +110,27 @@ namespace Oukilestkiki.Services.Photos
             recherche.Photos = null;
 
             db.SaveChanges();
+        }
+
+        public void DownloadPhotosRecherche(Recherche r)
+        {
+            var photos = db.Photos.Where(p => p.Recherches.Select(rr => rr.Id).Contains(r.Id)).ToList();
+
+            using (var fileStream = new FileStream($@"C:\temp\photos_recherche_{r.Id}_{DateTime.Now.ToString("ddMMyyyssmmHH")}.zip", FileMode.CreateNew))
+            {
+                using (var archive = new ZipArchive(fileStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var photo in photos)
+                    {
+                        var zipArchiveEntry = archive.CreateEntry(photo.FileName, CompressionLevel.Fastest);
+                        var fileBytes = File.ReadAllBytes(photo.FilePath);
+                        using (var zipStream = zipArchiveEntry.Open())
+                        {
+                            zipStream.Write(fileBytes, 0, fileBytes.Length);
+                        }
+                    }
+                }
+            }
         }
     }
 }

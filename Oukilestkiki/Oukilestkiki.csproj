@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Controllers\TypeAnimalsController.cs" />
     <Compile Include="Controllers\UtilisateursController.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,7 +215,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PhotoRechercheModel.cs" />
     <Compile Include="Services\Photos\PhotosService.cs" />
-    <Compile Include="Services\Photos\UploaderService.cs" />
+    <Compile Include="Services\Photos\FileManagerService.cs" />
     <Compile Include="ViewModels\UtilisateurCreateEditVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -264,6 +265,11 @@
     <Content Include="Views\Utilisateurs\Index.cshtml" />
     <Content Include="Views\Utilisateurs\Inscription.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Photos\Create.cshtml" />
+    <Content Include="Views\Photos\Delete.cshtml" />
+    <Content Include="Views\Photos\Details.cshtml" />
+    <Content Include="Views\Photos\Edit.cshtml" />
+    <Content Include="Views\Photos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
