@@ -1,4 +1,6 @@
-﻿namespace Oukilestkiki.Models
+﻿using BO;
+
+namespace Oukilestkiki.Models
 {
     public class Animal
     {

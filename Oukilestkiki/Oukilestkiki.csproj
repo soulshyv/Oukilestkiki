@@ -136,7 +136,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TypeAnimalsController.cs" />
     <Compile Include="Controllers\UtilisateursController.cs" />
-    <Compile Include="Enums\TypeMessageEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -149,13 +148,6 @@
       <DependentUpon>201905231156391_AddAnimalMaitre.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Animal.cs" />
-    <Compile Include="Models\Photo.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Recherche.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\TypeAnimal.cs" />
-    <Compile Include="Models\Utilisateur.cs" />
     <Compile Include="Models\UtilisateurCreateEditVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -231,6 +223,16 @@
     <EmbeddedResource Include="Migrations\201905231156391_AddAnimalMaitre.resx">
       <DependentUpon>201905231156391_AddAnimalMaitre.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BO\BO.csproj">
+      <Project>{88FCDDEE-DD2E-4D63-9043-ADD30F23B37E}</Project>
+      <Name>BO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhotosService\PhotosService.csproj">
+      <Project>{7bb7b2cc-d6ab-4a7b-9744-363620941fb5}</Project>
+      <Name>PhotosService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oukilestkiki", "Oukilestkiki\Oukilestkiki.csproj", "{9C9618A5-EED7-4949-B0BE-1E4D40B8F9AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosService", "PhotosService\PhotosService.csproj", "{7BB7B2CC-D6AB-4A7B-9744-363620941FB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BO", "BO\BO.csproj", "{88FCDDEE-DD2E-4D63-9043-ADD30F23B37E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{9C9618A5-EED7-4949-B0BE-1E4D40B8F9AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C9618A5-EED7-4949-B0BE-1E4D40B8F9AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C9618A5-EED7-4949-B0BE-1E4D40B8F9AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB7B2CC-D6AB-4A7B-9744-363620941FB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB7B2CC-D6AB-4A7B-9744-363620941FB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB7B2CC-D6AB-4A7B-9744-363620941FB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB7B2CC-D6AB-4A7B-9744-363620941FB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88FCDDEE-DD2E-4D63-9043-ADD30F23B37E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88FCDDEE-DD2E-4D63-9043-ADD30F23B37E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88FCDDEE-DD2E-4D63-9043-ADD30F23B37E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88FCDDEE-DD2E-4D63-9043-ADD30F23B37E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

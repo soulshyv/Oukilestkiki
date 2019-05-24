@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Oukilestkiki.Enums;
+using Oukilestkiki.Models;
 
-namespace Oukilestkiki.Models
+namespace BO
 {
     public class Utilisateur
     {

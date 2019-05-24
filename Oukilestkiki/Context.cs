@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using BO;
 using Oukilestkiki.Models;
 
 namespace Oukilestkiki

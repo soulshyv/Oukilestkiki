@@ -1,4 +1,5 @@
-﻿using Oukilestkiki.Enums;
+﻿using BO;
+using Oukilestkiki.Enums;
 
 namespace Oukilestkiki.Models
 {
