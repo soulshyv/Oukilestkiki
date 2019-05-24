@@ -198,7 +198,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+
     <Compile Include="Controllers\PhotosController.cs" />
+
+    <Compile Include="Controllers\LoginController.cs" />
+
     <Compile Include="Controllers\TypeAnimalsController.cs" />
     <Compile Include="Controllers\UtilisateursController.cs" />
     <Compile Include="Global.asax.cs">
@@ -211,6 +215,10 @@
     <Compile Include="Migrations\201905231156391_AddAnimalMaitre.cs" />
     <Compile Include="Migrations\201905231156391_AddAnimalMaitre.Designer.cs">
       <DependentUpon>201905231156391_AddAnimalMaitre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905241239416_addAnnotation.cs" />
+    <Compile Include="Migrations\201905241239416_addAnnotation.Designer.cs">
+      <DependentUpon>201905241239416_addAnnotation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PhotoRechercheModel.cs" />
@@ -264,12 +272,17 @@
     <Content Include="Views\Utilisateurs\Edit.cshtml" />
     <Content Include="Views\Utilisateurs\Index.cshtml" />
     <Content Include="Views\Utilisateurs\Inscription.cshtml" />
+
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Photos\Create.cshtml" />
     <Content Include="Views\Photos\Delete.cshtml" />
     <Content Include="Views\Photos\Details.cshtml" />
     <Content Include="Views\Photos\Edit.cshtml" />
     <Content Include="Views\Photos\Index.cshtml" />
+
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\Erreur.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -297,10 +310,13 @@
       <DependentUpon>201905231156391_AddAnimalMaitre.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905241239416_addAnnotation.resx">
+      <DependentUpon>201905241239416_addAnnotation.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BO\BO.csproj">
-      <Project>{88FCDDEE-DD2E-4D63-9043-ADD30F23B37E}</Project>
+      <Project>{88fcddee-dd2e-4d63-9043-add30f23b37e}</Project>
       <Name>BO</Name>
     </ProjectReference>
   </ItemGroup>

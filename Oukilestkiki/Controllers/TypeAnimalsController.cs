@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using BO;
 using Oukilestkiki;
 using Oukilestkiki.ViewModels;
 
@@ -18,28 +19,40 @@ namespace Oukilestkiki.Controllers
         // GET: TypeAnimals
         public ActionResult Index()
         {
-            return View(db.TypeAnimaux.ToList());
+            if (IsValid())
+            {
+                return View(db.TypeAnimaux.ToList());
+            }
+            return View("Error");
         }
 
         // GET: TypeAnimals/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (IsValid())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TypeAnimal typeAnimal = db.TypeAnimaux.Find(id);
+                if (typeAnimal == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(typeAnimal);
             }
-            TypeAnimal typeAnimal = db.TypeAnimaux.Find(id);
-            if (typeAnimal == null)
-            {
-                return HttpNotFound();
-            }
-            return View(typeAnimal);
+            return View("Error");
         }
 
         // GET: TypeAnimals/Create
         public ActionResult Create()
         {
-            return View();
+            if (IsValid())
+            {
+                return View();
+            }
+            return View("Error");
         }
 
         // POST: TypeAnimals/Create
@@ -62,16 +75,20 @@ namespace Oukilestkiki.Controllers
         // GET: TypeAnimals/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (IsValid())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TypeAnimal typeAnimal = db.TypeAnimaux.Find(id);
+                if (typeAnimal == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(typeAnimal);
             }
-            TypeAnimal typeAnimal = db.TypeAnimaux.Find(id);
-            if (typeAnimal == null)
-            {
-                return HttpNotFound();
-            }
-            return View(typeAnimal);
+            return View("Error");
         }
 
         // POST: TypeAnimals/Edit/5
@@ -93,16 +110,20 @@ namespace Oukilestkiki.Controllers
         // GET: TypeAnimals/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (IsValid())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TypeAnimal typeAnimal = db.TypeAnimaux.Find(id);
+                if (typeAnimal == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(typeAnimal);
             }
-            TypeAnimal typeAnimal = db.TypeAnimaux.Find(id);
-            if (typeAnimal == null)
-            {
-                return HttpNotFound();
-            }
-            return View(typeAnimal);
+            return View("Error");
         }
 
         // POST: TypeAnimals/Delete/5
@@ -123,6 +144,19 @@ namespace Oukilestkiki.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public bool IsValid()
+        {
+            var user = (Utilisateur)Session["Utilisateur"];
+            if (user != null)
+            {
+                if (user.Role.Libelle.Equals("Admin"))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
