@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BO;
 
-namespace Oukilestkiki.Models
+namespace Oukilestkiki.ViewModels
 {
     public class UtilisateurCreateEditVm
     {

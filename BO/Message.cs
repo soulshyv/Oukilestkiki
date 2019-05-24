@@ -1,7 +1,7 @@
 ﻿using BO;
 using Oukilestkiki.Enums;
 
-namespace Oukilestkiki.Models
+namespace Oukilestkiki.ViewModels
 {
     public class Message
     {

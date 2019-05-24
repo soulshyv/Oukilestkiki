@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BO;
 using Oukilestkiki;
-using Oukilestkiki.Models;
+using Oukilestkiki.ViewModels;
 
 namespace Oukilestkiki.Controllers
 {

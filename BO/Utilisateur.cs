@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Oukilestkiki.Models;
+using Oukilestkiki.ViewModels;
 
 namespace BO
 {

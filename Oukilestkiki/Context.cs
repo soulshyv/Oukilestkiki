@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 using BO;
-using Oukilestkiki.Models;
+using Oukilestkiki.ViewModels;
 
 namespace Oukilestkiki
 {

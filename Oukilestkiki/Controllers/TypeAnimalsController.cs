@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Oukilestkiki;
-using Oukilestkiki.Models;
+using Oukilestkiki.ViewModels;
 
 namespace Oukilestkiki.Controllers
 {

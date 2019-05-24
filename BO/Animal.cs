@@ -1,6 +1,6 @@
 ﻿using BO;
 
-namespace Oukilestkiki.Models
+namespace Oukilestkiki.ViewModels
 {
     public class Animal
     {
