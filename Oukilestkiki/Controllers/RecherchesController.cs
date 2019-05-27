@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using BO;
 using Oukilestkiki;
+using Oukilestkiki.Services.Photos;
+using Oukilestkiki.ViewModels;
 
 namespace Oukilestkiki.Controllers
 {
@@ -28,7 +30,7 @@ namespace Oukilestkiki.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Recherche recherche = db.Recherches.Find(id);
+            var recherche = db.Recherches.Find(id);
             if (recherche == null)
             {
                 return HttpNotFound();
@@ -47,16 +49,27 @@ namespace Oukilestkiki.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Localisation,DerniereApparition,Description,Active")] Recherche recherche)
+        public ActionResult Create(RechercheCreateEditViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                db.Recherches.Add(recherche);
+                var recherche = db.Recherches.Add(vm.Recherche);
+
+                var photoService = new PhotosService();
+                var photos = photoService.Add(new PhotoRechercheViewModel
+                {
+                    Photos = vm.Photos,
+                    Recherche = recherche,
+                    Animal = recherche.Animal
+                });
+
+                recherche.Photos = photos;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            return View(recherche);
+            return View(vm);
         }
 
         // GET: Recherches/Edit/5
@@ -66,7 +79,7 @@ namespace Oukilestkiki.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Recherche recherche = db.Recherches.Find(id);
+            var recherche = db.Recherches.Find(id);
             if (recherche == null)
             {
                 return HttpNotFound();
@@ -79,15 +92,31 @@ namespace Oukilestkiki.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Localisation,DerniereApparition,Description,Active")] Recherche recherche)
+        public ActionResult Edit(RechercheCreateEditViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(recherche).State = EntityState.Modified;
+                var recherche = db.Recherches.Find(vm.Recherche.Id);
+
+                if (recherche == null)
+                {
+                    return HttpNotFound();
+                }
+
+                var photoService = new PhotosService();
+                var photos = photoService.UpdatePhotosRecherche(new PhotoRechercheViewModel
+                {
+                    Photos = vm.Photos,
+                    Recherche = recherche,
+                    Animal = recherche.Animal
+                });
+
+                recherche.Photos = photos;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Details", new { id = recherche.Id });
             }
-            return View(recherche);
+            return View(vm.Recherche);
         }
 
         // GET: Recherches/Delete/5
@@ -97,7 +126,7 @@ namespace Oukilestkiki.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Recherche recherche = db.Recherches.Find(id);
+            var recherche = db.Recherches.Find(id);
             if (recherche == null)
             {
                 return HttpNotFound();
@@ -110,7 +139,7 @@ namespace Oukilestkiki.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Recherche recherche = db.Recherches.Find(id);
+            var recherche = db.Recherches.Find(id);
             db.Recherches.Remove(recherche);
             db.SaveChanges();
             return RedirectToAction("Index");

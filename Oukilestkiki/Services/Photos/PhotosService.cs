@@ -15,16 +15,16 @@ namespace Oukilestkiki.Services.Photos
     {
         private Context db = new Context();
 
-        public List<Photo> Add(PhotoRechercheViewModel prm)
+        public List<Photo> Add(PhotoRechercheViewModel prvm)
         {
-            if (!prm.Photos.Any())
+            if (!prvm.Photos.Any())
             {
                 return null;
             }
 
             var photos = new List<Photo>();
 
-            foreach (var p in prm.Photos)
+            foreach (var p in prvm.Photos)
             {
                 var photo = FileManagerService.Upload(p);
                 if (photo == null)
@@ -32,12 +32,12 @@ namespace Oukilestkiki.Services.Photos
                     return null;
                 }
 
-                if (prm.Recherche != null)
+                if (prvm.Recherche != null)
                 {
-                    photo.Recherches.Add(prm.Recherche);
+                    photo.Recherches.Add(prvm.Recherche);
                 }
 
-                photo.Animal = prm.Animal;
+                photo.Animal = prvm.Animal;
 
                 db.Photos.Add(photo);
 
@@ -49,36 +49,19 @@ namespace Oukilestkiki.Services.Photos
             return photos;
         }
 
-        public void UpdatePhotosRecherche(List<Photo> photos, Recherche r)
+        public List<Photo> UpdatePhotosRecherche(PhotoRechercheViewModel prvm)
         {
-            var ps = db.Photos.Where(p => p.Recherches.Select(rr => rr.Id).Contains(r.Id));
-            ps.ForEach(p => db.Photos.Remove(p));
-
-            var recherche = db.Recherches.Find(r.Id);
-            if (recherche == null)
-            {
-                return;
-            }
-            recherche.Photos = photos;
-
-            db.SaveChanges();
+            DeletePhotosRecherche(prvm.Recherche);
+            return Add(prvm);
         }
 
-        public void UpdatePhotosAnimal(List<Photo> photos, Animal a)
+        public List<Photo> UpdatePhotosAnimal(PhotoRechercheViewModel prvm)
         {
-            var ps = db.Photos.Where(p => p.Animal.Id == a.Id);
-            ps.ForEach(p => db.Photos.Remove(p));
-            
-            photos.ForEach(p =>
-            {
-                p.Animal = a;
-                db.Photos.Add(p);
-            });
-
-            db.SaveChanges();
+            DeletePhotosAnimal(prvm.Animal);
+            return Add(prvm);
         }
 
-        public void DeletePhotos(int id)
+        public void DeletePhoto(int id)
         {
             var photo = db.Photos.Find(id);
             if (photo == null)
