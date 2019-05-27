@@ -22,9 +22,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Avis de recherche", "Index", "Recherches")</li>
                     @if (Session["Utilisateur"] == null)
                     {
-                        <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
                         <li>@Html.ActionLink("S'inscrire", "Inscription", "Utilisateurs")</li>
                         <li>@Html.ActionLink("Connexion", "Login", "Login")</li>
                     }
@@ -36,13 +36,12 @@
                             <li>@Html.ActionLink("Gestion type animaux", "Index", "TypeAnimals")</li>
                             <li>@Html.ActionLink("Gestion des Membres", "Index", "Utilisateurs")</li>
                             <li>@Html.ActionLink("Modifier son profil", "EditProfil", "Utilisateurs")</li>
-                            <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Login")</li>
                         }
                         else
                         {
                             <li>@Html.ActionLink("Modifier son profil", "EditProfil", "Utilisateurs")</li>
-                            <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Login")</li>
                         }
+                        <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Login")</li>
                     }
 
                 </ul>

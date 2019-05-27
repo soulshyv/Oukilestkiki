@@ -8,7 +8,7 @@ namespace Oukilestkiki.ViewModels
         public string Nom { get; set; }
         public string Couleur { get; set; }
         public int Age { get; set; }
-        public TypeAnimal Type { get; set; }
-        public Utilisateur Maitre { get; set; }
+        public virtual TypeAnimal Type { get; set; }
+        public virtual Utilisateur Maitre { get; set; }
     }
 }
