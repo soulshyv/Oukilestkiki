@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BO;
 using Oukilestkiki;
+using Oukilestkiki.Services.Photos;
 using Oukilestkiki.ViewModels;
 
 namespace Oukilestkiki.Controllers
@@ -48,12 +49,15 @@ namespace Oukilestkiki.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FileName,FilePath")] Photo photo)
+        public ActionResult Create(PhotoCreateViewModel photo)
         {
             if (ModelState.IsValid)
             {
-                db.Photos.Add(photo);
-                db.SaveChanges();
+                var photoService = new PhotosService();
+                photoService.Add(new PhotoRechercheViewModel
+                {
+                    Photos = photo.ImageFile
+                });
                 return RedirectToAction("Index");
             }
 
@@ -115,6 +119,13 @@ namespace Oukilestkiki.Controllers
             db.Photos.Remove(photo);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Download(int id)
+        {
+            var photoService = new PhotosService();
+            var res = photoService.DownloadPhotoById(id);
+            return File(res.FileContent, res.MimeType, res.FileName);
         }
 
         protected override void Dispose(bool disposing)

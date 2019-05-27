@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Net;
+using System.Web.Mvc;
 using BO;
-using Oukilestkiki.Models;
+using Oukilestkiki.Services.Photos.Models;
 using Oukilestkiki.ViewModels;
 using WebGrease.Css.Extensions;
 
@@ -15,7 +15,7 @@ namespace Oukilestkiki.Services.Photos
     {
         private Context db = new Context();
 
-        public List<Photo> Add(PhotoRechercheModel prm)
+        public List<Photo> Add(PhotoRechercheViewModel prm)
         {
             if (!prm.Photos.Any())
             {
@@ -113,7 +113,7 @@ namespace Oukilestkiki.Services.Photos
             db.SaveChanges();
         }
 
-        public void DownloadPhotosRecherche(Recherche r)
+        public ZipArchive DownloadPhotosRecherche(Recherche r)
         {
             var photos = db.Photos.Where(p => p.Recherches.Select(rr => rr.Id).Contains(r.Id)).ToList();
 
@@ -130,8 +130,27 @@ namespace Oukilestkiki.Services.Photos
                             zipStream.Write(fileBytes, 0, fileBytes.Length);
                         }
                     }
+
+                    return archive;
                 }
             }
+        }
+
+        public PhotoFileResult DownloadPhotoById(int id)
+        {
+            var photo = db.Photos.Find(id);
+
+            if (photo == null)
+            {
+                return null;
+            }
+
+            var fileBytes = System.IO.File.ReadAllBytes(photo.FilePath);
+            return new PhotoFileResult{
+                FileContent = fileBytes,
+                MimeType = System.Net.Mime.MediaTypeNames.Application.Octet,
+                FileName = photo.FileName
+            };
         }
     }
 }

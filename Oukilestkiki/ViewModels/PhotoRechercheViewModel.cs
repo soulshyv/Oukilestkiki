@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web;
 using BO;
-using Oukilestkiki.ViewModels;
 
-namespace Oukilestkiki.Models
+namespace Oukilestkiki.ViewModels
 {
-    public class PhotoRechercheModel
+    public class PhotoRechercheViewModel
     {
-        public List<HttpPostedFileBase> Photos { get; set; }
+        public HttpPostedFileBase[] Photos { get; set; }
         public Recherche Recherche { get; set; }
         public Animal Animal { get; set; }
     }
