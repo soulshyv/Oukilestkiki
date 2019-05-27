@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Oukilestkiki.ViewModels;
 
-namespace Oukilestkiki.ViewModels
+namespace BO
 {
     public class Recherche
     {

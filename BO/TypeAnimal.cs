@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
- namespace Oukilestkiki.ViewModels
+namespace BO
 {
     public class TypeAnimal
     {

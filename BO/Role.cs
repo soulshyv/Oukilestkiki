@@ -1,4 +1,4 @@
-﻿namespace Oukilestkiki.ViewModels
+﻿namespace BO
 {
     public class Role
     {
