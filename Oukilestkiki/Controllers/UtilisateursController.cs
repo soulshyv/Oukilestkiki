@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using BO;
@@ -30,20 +31,16 @@ namespace Oukilestkiki.Controllers
         // GET: Utilisateurs/Details/5
         public ActionResult Details(int? id)
         {
-            if (IsValid())
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Utilisateur utilisateur = db.Utilisateurs.Find(id);
-                if (utilisateur == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(utilisateur);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View("Error");
+            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            if (utilisateur == null)
+            {
+                return HttpNotFound();
+            }
+            return View(utilisateur);
         }
 
         // GET: Utilisateurs/Create
@@ -94,6 +91,7 @@ namespace Oukilestkiki.Controllers
             vm.Utilisateur = db.Utilisateurs.Find(id);
             vm.IsInscription = isInscription;
             vm.ListeRoles = db.Roles.ToList();
+            vm.Id = vm.Utilisateur.Id;
             if (vm == null)
             {
                 return HttpNotFound();
@@ -149,10 +147,18 @@ namespace Oukilestkiki.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var user = (Utilisateur)Session["Utilisateur"];
             Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            if (user != null)
+            {
+                if (user.Id == utilisateur.Id)
+                {
+                    Session["Utilisateur"] = null;
+                }
+            }
             db.Utilisateurs.Remove(utilisateur);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         protected override void Dispose(bool disposing)
@@ -190,6 +196,53 @@ namespace Oukilestkiki.Controllers
                 }
             }
             return false;
+        }
+
+        public ActionResult Recherche(string nom)
+        {
+            var currentUser = (Utilisateur)Session["Utilisateur"];
+            var listeUsers = db.Utilisateurs.ToList();
+            var listeUserSearch = new List<Utilisateur>();
+            if (nom.Contains(" "))
+            {
+                var mot1 = nom.Split(' ');
+                if (mot1.Length >= 2)
+                {
+                    listeUsers.ForEach(user =>
+                        {
+                            foreach (var prenom in mot1)
+                            {
+                                if (user.Nom.ToLower().Equals(prenom) || user.Nom.ToLower().Equals(prenom))
+                                {
+                                    listeUserSearch.Add(user);
+                                }
+                            }
+                        }
+                    );
+                }
+            }
+            else
+            {
+                listeUsers.ForEach(user =>
+                    {
+                        if (user.Prenom.ToLower().Equals(nom) || user.Nom.ToLower().Equals(nom))
+                        {
+                            listeUserSearch.Add(user);
+                        }
+                    }
+                );
+            }
+
+            if (listeUserSearch.Count == 1)
+            {
+                return RedirectToAction("Details",new { id = listeUserSearch.FirstOrDefault().Id});
+            }
+            if (currentUser != null)
+            {
+                listeUserSearch.Remove(listeUserSearch.Find(user => user.Id == currentUser.Id));
+                return View(listeUserSearch);
+            }
+            return View(listeUserSearch);
         }
     }
 }

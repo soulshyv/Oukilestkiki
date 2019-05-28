@@ -8,5 +8,6 @@ namespace Oukilestkiki.ViewModels
         public Utilisateur Utilisateur { get; set; }
         public List<Role> ListeRoles { get; set; }
         public bool IsInscription { get; set; }
+        public int Id { get; set; }
     }
 }
