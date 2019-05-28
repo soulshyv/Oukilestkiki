@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Utilisateur</h4>
         <hr />
@@ -48,7 +48,7 @@
                 @Html.ValidationMessageFor(model => model.Utilisateur.Mail, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         @if (!Model.IsInscription)
         {
             <div class="form-group">
@@ -67,7 +67,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Utilisateur.Role, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.Utilisateur.Role.Id, Model.ListeRoles.Select(role => new SelectListItem{Text = role.Libelle, Value = role.Id.ToString()}), new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DropDownListFor(model => model.Utilisateur.Role.Id, Model.ListeRoles.Select(role => new SelectListItem { Text = role.Libelle, Value = role.Id.ToString() }), new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Utilisateur.Role.Id, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -75,10 +75,24 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Sauvegarder" class="btn btn-default" />
             </div>
         </div>
     </div>
+}
+
+@if (Model.IsInscription)
+{
+    using (Html.BeginForm("Delete", "Utilisateurs", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Supprimer" class="btn btn-default" />
+            </div>
+        </div>
+    }
 }
 
 <div>
