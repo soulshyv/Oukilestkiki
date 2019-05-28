@@ -6,8 +6,7 @@ namespace Oukilestkiki.ViewModels
 {
     public class PhotoCreateViewModel
     {
-
-        [DisplayName("Photo")]
-        public HttpPostedFileBase[] ImageFile { get; set; }
+        [DisplayName("Photos")]
+        public HttpPostedFileBase[] ImageFiles { get; set; }
     }
 }

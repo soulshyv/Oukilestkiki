@@ -24,7 +24,7 @@ namespace Oukilestkiki.Services.Photos
 
             var photos = new List<Photo>();
 
-            foreach (var p in prvm.Photos)
+            foreach (var p in prvm.Photos.Where(_ => _ != null))
             {
                 var photo = FileManagerService.Upload(p);
                 if (photo == null)
@@ -34,10 +34,14 @@ namespace Oukilestkiki.Services.Photos
 
                 if (prvm.Recherche != null)
                 {
-                    photo.Recherches.Add(prvm.Recherche);
+                    if (photo.Recherches == null)
+                    {
+                        photo.Recherches = new List<Recherche>();
+                    }
+                    photo.Recherches.Add(db.Recherches.Find(prvm.Recherche.Id));
                 }
 
-                photo.Animal = prvm.Animal;
+                photo.Animal = db.Animaux.Find(prvm.Animal.Id);
 
                 db.Photos.Add(photo);
 
@@ -51,26 +55,26 @@ namespace Oukilestkiki.Services.Photos
 
         public List<Photo> UpdatePhotosRecherche(PhotoRechercheViewModel prvm)
         {
-            DeletePhotosRecherche(prvm.Recherche);
             return Add(prvm);
         }
 
         public List<Photo> UpdatePhotosAnimal(PhotoRechercheViewModel prvm)
         {
-            DeletePhotosAnimal(prvm.Animal);
             return Add(prvm);
         }
 
-        public void DeletePhoto(int id)
+        public bool DeletePhotoById(int id)
         {
             var photo = db.Photos.Find(id);
             if (photo == null)
             {
-                return;
+                return false;
             }
 
             db.Photos.Remove(photo);
             db.SaveChanges();
+
+            return true;
         }
 
         public void DeletePhotosAnimal(Animal a)
@@ -80,7 +84,7 @@ namespace Oukilestkiki.Services.Photos
             db.SaveChanges();
         }
 
-        public void DeletePhotosRecherche(Recherche r)
+        public bool DeletePhotosRecherche(Recherche r)
         {
             var photos = db.Photos.Where(p => p.Recherches.Select(rr => rr.Id).Contains(r.Id));
             photos.ForEach(p => db.Photos.Remove(p));
@@ -88,12 +92,14 @@ namespace Oukilestkiki.Services.Photos
             var recherche = db.Recherches.Find(r.Id);
             if (recherche == null)
             {
-                return;
+                return false;
             }
 
             recherche.Photos = null;
 
             db.SaveChanges();
+
+            return true;
         }
 
         public ZipArchive DownloadPhotosRecherche(Recherche r)

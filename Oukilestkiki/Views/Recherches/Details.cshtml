@@ -39,10 +39,24 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Active)
+            @if (Model.Active)
+            {
+                <span>Oui</span>
+            }
+            else
+            {
+                <span>Non</span>
+            }
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Photos)
+        </dt>
     </dl>
+    @foreach (var photo in Model.Photos)
+    {
+        <img src="@Url.Content(photo.FilePath)" alt="@photo.FileName" height="200"/>
+    }
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

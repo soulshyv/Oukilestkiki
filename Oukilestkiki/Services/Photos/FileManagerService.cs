@@ -11,7 +11,7 @@ namespace Oukilestkiki.Services.Photos
 {
     public static class FileManagerService
     {
-        private static string BasePath = HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["PhotoUploadDir"]);
+        private static string PhotosBaseDir = WebConfigurationManager.AppSettings["PhotoUploadDir"];
 
         public static Photo Upload(HttpPostedFileBase file)
         {
@@ -20,10 +20,10 @@ namespace Oukilestkiki.Services.Photos
                 return null;
             }
 
-            var basePath = BasePath;
             var fileName = Path.GetFileName(file.FileName);
-            var path = Path.Combine(basePath, fileName);
-            file.SaveAs(path);
+            var realPath = HttpContext.Current.Server.MapPath(Path.Combine(PhotosBaseDir, fileName));
+            var path = Path.Combine(PhotosBaseDir, fileName);
+            file.SaveAs(realPath);
 
             return new Photo
             {
@@ -34,7 +34,7 @@ namespace Oukilestkiki.Services.Photos
 
         public static void DeleteByFileName(string fileName)
         {
-            foreach (var file in Directory.GetFiles(BasePath))
+            foreach (var file in Directory.GetFiles(HttpContext.Current.Server.MapPath(PhotosBaseDir)))
             {
                 if (Path.GetFileName(file) == fileName)
                 {

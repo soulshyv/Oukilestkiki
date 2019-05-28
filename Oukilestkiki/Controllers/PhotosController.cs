@@ -56,7 +56,7 @@ namespace Oukilestkiki.Controllers
                 var photoService = new PhotosService();
                 photoService.Add(new PhotoRechercheViewModel
                 {
-                    Photos = photo.ImageFile
+                    Photos = photo.ImageFiles
                 });
                 return RedirectToAction("Index");
             }
@@ -115,10 +115,17 @@ namespace Oukilestkiki.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Photo photo = db.Photos.Find(id);
-            db.Photos.Remove(photo);
-            db.SaveChanges();
+            var photoService = new PhotosService();
+            photoService.DeletePhotoById(id);
             return RedirectToAction("Index");
+        }
+
+        // POST: Photos/Delete/5
+        [HttpPost]
+        public bool DeletePhotoAjax(int id)
+        {
+            var photoService = new PhotosService();
+            return photoService.DeletePhotoById(id);
         }
 
         public ActionResult Download(int id)

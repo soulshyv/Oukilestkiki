@@ -53,17 +53,20 @@ namespace Oukilestkiki.Controllers
         {
             if (ModelState.IsValid)
             {
-                var recherche = db.Recherches.Add(vm.Recherche);
+                //var recherche = db.Recherches.Add(vm.Recherche);
+                //var animal = db.Animaux.Add(new Animal());
+                vm.Recherche.Animal = new Animal();
 
                 var photoService = new PhotosService();
-                var photos = photoService.Add(new PhotoRechercheViewModel
+                var photosRecherche = photoService.Add(new PhotoRechercheViewModel
                 {
-                    Photos = vm.Photos,
-                    Recherche = recherche,
-                    Animal = recherche.Animal
+                    Photos = vm.ImageFiles,
+                    Recherche = vm.Recherche,
+                    Animal = vm.Recherche.Animal
                 });
 
-                recherche.Photos = photos;
+                vm.Recherche.Photos = photosRecherche;
+
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -84,7 +87,10 @@ namespace Oukilestkiki.Controllers
             {
                 return HttpNotFound();
             }
-            return View(recherche);
+            return View(new RechercheCreateEditViewModel
+            {
+                Recherche = recherche
+            });
         }
 
         // POST: Recherches/Edit/5
@@ -103,20 +109,26 @@ namespace Oukilestkiki.Controllers
                     return HttpNotFound();
                 }
 
+                recherche.Active = vm.Recherche.Active;
+                recherche.DerniereApparition = vm.Recherche.DerniereApparition;
+                recherche.Description = vm.Recherche.Description;
+                recherche.Localisation = vm.Recherche.Localisation;
+                db.SaveChanges();
+
                 var photoService = new PhotosService();
                 var photos = photoService.UpdatePhotosRecherche(new PhotoRechercheViewModel
                 {
-                    Photos = vm.Photos,
+                    Photos = vm.ImageFiles,
                     Recherche = recherche,
                     Animal = recherche.Animal
                 });
 
-                recherche.Photos = photos;
+                recherche.Photos.AddRange(photos.Select(p => db.Photos.Find(p.Id)));
                 db.SaveChanges();
 
                 return RedirectToAction("Details", new { id = recherche.Id });
             }
-            return View(vm.Recherche);
+            return View(vm);
         }
 
         // GET: Recherches/Delete/5
