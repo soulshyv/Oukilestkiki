@@ -23,6 +23,10 @@ textarea {
     max-width: 280px;
 }
 
+.d-none {
+    visibility: hidden
+}
+
 /*.input-group.md-form.form-sm.form-2 input {
     border: 1px solid #bdbdbd;
     border-top-left-radius: 0.25rem;

@@ -1,4 +1,6 @@
-﻿@model Oukilestkiki.Models.UtilisateurCreateEditVm
+﻿@using System.Data.Entity.Infrastructure
+@using System.Security.Cryptography.X509Certificates
+@model Oukilestkiki.Models.UtilisateurCreateEditVm
 
 @{
     ViewBag.Title = "Edit";
@@ -83,17 +85,52 @@
 
 @if (Model.IsInscription)
 {
-    using (Html.BeginForm("Delete", "Utilisateurs", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Id)
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Supprimer" class="btn btn-default" />
-            </div>
+    bool suppr = false;
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @*<input type="submit" value="Supprimer" class="btn btn-default" onclick="affichageSuppr()"/>*@
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModalCenter">
+                Supprimer
+            </button>
         </div>
-    }
+    </div>
 }
+
+    <div  id="Suppression">
+        @using (Html.BeginForm("Delete", "Utilisateurs", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <p>Voulez vous vraiment supprimer votre compte ?</p>
+                    <input type="submit" value="Oui" class="btn btn-default" />
+                    <input value="Non" class="btn btn-default" onclick="masquerSuppr()" />
+                </div>
+            </div>*@
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Suppression</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Voulez vous vraiment supprimer votre compte ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            @*<button type="button" class="btn btn-primary">Supprimer</button>*@
+                            <input type="submit" value="Supprimer" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -101,4 +138,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function affichageSuppr() {
+            document.getElementById("Suppression").style.visibility = "visible";
+        }
+
+        function masquerSuppr() {
+            document.getElementById("Suppression").style.visibility = "hidden";
+        }
+    </script>
 }
