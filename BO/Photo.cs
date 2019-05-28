@@ -8,7 +8,7 @@ namespace BO
         public int Id { get; set; }
         public string FileName { get; set; }
         public string FilePath { get; set; }
-        public Animal Animal { get; set; }
-        public List<Recherche> Recherches { get; set; }
+        public virtual Animal Animal { get; set; }
+        public virtual List<Recherche> Recherches { get; set; }
     }
 }

@@ -11,40 +11,42 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nom de l'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (Session["Utilisateur"] == null)
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("OUKILESTKIKI", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Avis de recherche", "Index", "Recherches")</li>
+                @if (Session["Utilisateur"] == null)
+                {
+                    <li>@Html.ActionLink("S'inscrire", "Inscription", "Utilisateurs")</li>
+                    <li>@Html.ActionLink("Connexion", "Login", "Login")</li>
+                }
+                else
+                {
+                    var user = (Utilisateur)Session["Utilisateur"];
+                    if (user.Role.Libelle.Equals("Admin"))
                     {
-                        <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                        <li>@Html.ActionLink("S'inscrire", "Inscription", "Utilisateurs")</li>
-                        <li>@Html.ActionLink("Connexion", "Login", "Login")</li>
+                        <li>@Html.ActionLink("Gestion type animaux", "Index", "TypeAnimals")</li>
+                        <li>@Html.ActionLink("Gestion des Membres", "Index", "Utilisateurs")</li>
+                        <li>@Html.ActionLink("Modifier son profil", "EditProfil", "Utilisateurs")</li>
                     }
                     else
                     {
-                        var user = (Utilisateur)Session["Utilisateur"];
-                        if (user.Role.Libelle.Equals("Admin"))
-                        {
-                            <li>@Html.ActionLink("Gestion type animaux", "Index", "TypeAnimals")</li>
-                            <li>@Html.ActionLink("Gestion des Membres", "Index", "Utilisateurs")</li>
-                            <li>@Html.ActionLink("Modifier son profil", "EditProfil", "Utilisateurs")</li>
-                            <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Login")</li>
-                        }
-                        else
-                        {
-                            <li>@Html.ActionLink("Modifier son profil", "EditProfil", "Utilisateurs")</li>
-                            <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Login")</li>
-                        }
+                        <li>@Html.ActionLink("Modifier son profil", "EditProfil", "Utilisateurs")</li>
                     }
+
+                    <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Login")</li>
+                }
+            </ul>
+
 
                 </ul>
                 @using (Html.BeginForm("Recherche", "Utilisateurs", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0", @style = "padding-top: 8px" }))
@@ -53,18 +55,29 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 }
             </div>
+
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryui") 
+@RenderSection("scripts", required: false)
 </body>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
 </html>

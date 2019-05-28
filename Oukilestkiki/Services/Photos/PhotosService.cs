@@ -15,16 +15,16 @@ namespace Oukilestkiki.Services.Photos
     {
         private Context db = new Context();
 
-        public List<Photo> Add(PhotoRechercheViewModel prm)
+        public List<Photo> Add(PhotoRechercheViewModel prvm)
         {
-            if (!prm.Photos.Any())
+            if (!prvm.Photos.Any())
             {
                 return null;
             }
 
             var photos = new List<Photo>();
 
-            foreach (var p in prm.Photos)
+            foreach (var p in prvm.Photos.Where(_ => _ != null))
             {
                 var photo = FileManagerService.Upload(p);
                 if (photo == null)
@@ -32,12 +32,16 @@ namespace Oukilestkiki.Services.Photos
                     return null;
                 }
 
-                if (prm.Recherche != null)
+                if (prvm.Recherche != null)
                 {
-                    photo.Recherches.Add(prm.Recherche);
+                    if (photo.Recherches == null)
+                    {
+                        photo.Recherches = new List<Recherche>();
+                    }
+                    photo.Recherches.Add(db.Recherches.Find(prvm.Recherche.Id));
                 }
 
-                photo.Animal = prm.Animal;
+                photo.Animal = db.Animaux.Find(prvm.Animal.Id);
 
                 db.Photos.Add(photo);
 
@@ -49,45 +53,28 @@ namespace Oukilestkiki.Services.Photos
             return photos;
         }
 
-        public void UpdatePhotosRecherche(List<Photo> photos, Recherche r)
+        public List<Photo> UpdatePhotosRecherche(PhotoRechercheViewModel prvm)
         {
-            var ps = db.Photos.Where(p => p.Recherches.Select(rr => rr.Id).Contains(r.Id));
-            ps.ForEach(p => db.Photos.Remove(p));
-
-            var recherche = db.Recherches.Find(r.Id);
-            if (recherche == null)
-            {
-                return;
-            }
-            recherche.Photos = photos;
-
-            db.SaveChanges();
+            return Add(prvm);
         }
 
-        public void UpdatePhotosAnimal(List<Photo> photos, Animal a)
+        public List<Photo> UpdatePhotosAnimal(PhotoRechercheViewModel prvm)
         {
-            var ps = db.Photos.Where(p => p.Animal.Id == a.Id);
-            ps.ForEach(p => db.Photos.Remove(p));
-            
-            photos.ForEach(p =>
-            {
-                p.Animal = a;
-                db.Photos.Add(p);
-            });
-
-            db.SaveChanges();
+            return Add(prvm);
         }
 
-        public void DeletePhotos(int id)
+        public bool DeletePhotoById(int id)
         {
             var photo = db.Photos.Find(id);
             if (photo == null)
             {
-                return;
+                return false;
             }
 
             db.Photos.Remove(photo);
             db.SaveChanges();
+
+            return true;
         }
 
         public void DeletePhotosAnimal(Animal a)
@@ -97,7 +84,7 @@ namespace Oukilestkiki.Services.Photos
             db.SaveChanges();
         }
 
-        public void DeletePhotosRecherche(Recherche r)
+        public bool DeletePhotosRecherche(Recherche r)
         {
             var photos = db.Photos.Where(p => p.Recherches.Select(rr => rr.Id).Contains(r.Id));
             photos.ForEach(p => db.Photos.Remove(p));
@@ -105,12 +92,14 @@ namespace Oukilestkiki.Services.Photos
             var recherche = db.Recherches.Find(r.Id);
             if (recherche == null)
             {
-                return;
+                return false;
             }
 
             recherche.Photos = null;
 
             db.SaveChanges();
+
+            return true;
         }
 
         public ZipArchive DownloadPhotosRecherche(Recherche r)

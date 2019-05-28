@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using System.Collections.Generic;
+using BO;
 
 namespace Oukilestkiki.ViewModels
 {
@@ -7,8 +8,9 @@ namespace Oukilestkiki.ViewModels
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Couleur { get; set; }
-        public int Age { get; set; }
-        public TypeAnimal Type { get; set; }
-        public Utilisateur Maitre { get; set; }
+        public int Age { get; set; } = 0;
+        public virtual TypeAnimal Type { get; set; }
+        public virtual Utilisateur Maitre { get; set; }
+        public virtual List<Photo> Photos { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace BO
         public int Id { get; set; }
         public string Contenu { get; set; }
         public TypeMessageEnum Type { get; set; }
-        public Utilisateur Destinataire { get; set; }
-        public Recherche Recherche { get; set; }
+        public virtual Utilisateur Destinataire { get; set; }
+        public virtual Recherche Recherche { get; set; }
     }
 }
