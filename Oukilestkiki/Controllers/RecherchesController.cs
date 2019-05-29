@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BO;
 using Oukilestkiki;
+using Oukilestkiki.Models;
 using Oukilestkiki.Services.Photos;
 using Oukilestkiki.ViewModels;
 
@@ -94,6 +95,13 @@ namespace Oukilestkiki.Controllers
                 db.Animaux.Add(vm.Recherche.Animal);
                 db.Recherches.Add(vm.Recherche);
 
+                if (Authentification.EstConnecte())
+                {
+                    var sessionUtilisateur = Authentification.GetSessionUtilisateur();
+                    var utilisateur = db.Utilisateurs.Find(sessionUtilisateur.Id);
+                    vm.Recherche.Animal.Maitre = utilisateur;
+                }
+
                 var photoService = new PhotosService();
                 var photosRecherche = photoService.Add(new PhotoRechercheViewModel
                 {
@@ -160,14 +168,20 @@ namespace Oukilestkiki.Controllers
                 db.SaveChanges();
 
                 var photoService = new PhotosService();
-                var photos = photoService.UpdatePhotosRecherche(new PhotoRechercheViewModel
+                var photosRecherche = photoService.UpdatePhotosRecherche(new PhotoRechercheViewModel
                 {
                     Photos = vm.ImageFilesRecherche,
                     Recherche = recherche,
-                    Animal = recherche.Animal
                 });
 
-                recherche.Photos.AddRange(photos.Select(p => db.Photos.Find(p.Id)));
+                var photosAnimal = photoService.UpdatePhotosAnimal(new PhotoRechercheViewModel
+                {
+                    Photos = vm.ImageFilesAnimal,
+                    Animal = vm.Recherche.Animal,
+                });
+
+                recherche.Photos.AddRange(photosRecherche.Select(p => db.Photos.Find(p.Id)));
+                recherche.Animal.Photos.AddRange(photosAnimal.Select(p => db.Photos.Find(p.Id)));
                 db.SaveChanges();
 
                 return RedirectToAction("Details", new { id = recherche.Id });

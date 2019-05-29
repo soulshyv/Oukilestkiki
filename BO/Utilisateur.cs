@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Oukilestkiki.ViewModels;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BO
 {
@@ -22,5 +22,8 @@ namespace BO
         public bool Suspendu { get; set; } = false;
         public virtual Role Role { get; set; }
         public List<Message> Messages { get; set; }
+
+        [NotMapped]
+        public string NomComplet => $"{Prenom} {Nom}";
     }
 }

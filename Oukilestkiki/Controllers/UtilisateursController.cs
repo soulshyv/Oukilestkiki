@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using BO;
 using Oukilestkiki;
+using Oukilestkiki.Models;
 using Oukilestkiki.ViewModels;
 
 namespace Oukilestkiki.Controllers
@@ -21,7 +22,7 @@ namespace Oukilestkiki.Controllers
         // GET: Utilisateurs
         public ActionResult Index()
         {
-            if (IsValid())
+            if (Authentification.EstConnecte())
             {
                 return View(db.Utilisateurs.ToList());
             }
@@ -126,7 +127,7 @@ namespace Oukilestkiki.Controllers
         // GET: Utilisateurs/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (IsValid())
+            if (Authentification.EstConnecte())
             {
                 if (id == null)
                 {
@@ -183,19 +184,6 @@ namespace Oukilestkiki.Controllers
             vm.IsInscription = true;
             vm.ListeRoles = db.Roles.ToList();
             return RedirectToAction("Edit", new { id = user.Id, isInscription = true });
-        }
-
-        public bool IsValid()
-        {
-            var user = (Utilisateur)Session["Utilisateur"];
-            if (user != null)
-            {
-                if (user.Role.Libelle.Equals("Admin"))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public ActionResult Recherche(string nom)
