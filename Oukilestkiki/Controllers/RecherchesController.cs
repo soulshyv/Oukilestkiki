@@ -26,46 +26,35 @@ namespace Oukilestkiki.Controllers
         [HttpPost]
         public ActionResult Index(string nom)
         {
-            var ListeAnimals = db.Animaux.ToList();
-            var ListeLieux = db.Recherches.Select(recherche => recherche.Localisation).ToList();
             var ListeRecherche = db.Recherches.ToList();
             var ListeRechercheFinal = new List<Recherche>();
-            if (nom.Contains(" "))
+            var mot1 = nom.Split(' ');
+
+            ListeRecherche.ForEach(recherche =>
             {
-                var mot1 = nom.Split(' ');
-                if (mot1.Length >= 2)
-                {
-                    ListeAnimals.ForEach(animal =>
-                    {
-                        foreach (var prenom in mot1)
-                        {
-                            if (animal.Nom.ToLower().Equals(prenom) || animal.Type.Libelle.ToLower().Equals(prenom))
-                            {
-                                //var rechercheEnCours = db.Recherches.Where(r => r.Animal.Id == animal.Id);
-                                var rechercheEnCours = db.Recherches.Find(animal.Id);
-                                if (rechercheEnCours != null)
-                                {
-                                    ListeRecherche.Add(rechercheEnCours);
-                                }
-                            }
-                        }
-                    }
-                    );
-                }
-            }
-            else
-            {
-                ListeRecherche.ForEach(recherche =>
+                foreach (var critere in mot1)
                 {
                     if (recherche.Localisation != null)
                     {
-                        if (recherche.Localisation.ToLower().Equals(nom.ToLower()))
+                        if (recherche.Localisation.ToLower().Equals(critere.ToLower()))
                         {
                             ListeRechercheFinal.Add(recherche);
                         }
                     }
-                });
-            }
+
+                    if (recherche.Animal.Nom != null)
+                    {
+                        if (recherche.Animal.Nom.ToLower().Contains(critere.ToLower()))
+                        {
+                            if (ListeRechercheFinal.All(element => element.Id != recherche.Id))
+                            {
+                                ListeRechercheFinal.Add(recherche);
+                            }
+                        }
+                    }
+                }
+            });
+
             return View(ListeRechercheFinal);
         }
         // GET: Recherches/Details/5
