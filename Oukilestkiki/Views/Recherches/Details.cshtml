@@ -1,62 +1,109 @@
 ﻿@model BO.Recherche
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Details de la recherche";
 }
 
-<h2>Details</h2>
+<h2>Details de la recherche</h2>
 
 <div>
-    <h4>Recherche</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Localisation)
-        </dt>
+    <div class="col-lg-6">
+        <h4>Recherche</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Localisation)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Localisation)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Localisation)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DerniereApparition)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DerniereApparition)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DerniereApparition)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DerniereApparition)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Active)
+            </dt>
 
-        <dd>
-            @if (Model.Active)
-            {
-                <span>Oui</span>
-            }
-            else
-            {
-                <span>Non</span>
-            }
-        </dd>
+            <dd>
+                @if (Model.Active)
+                {
+                    <span>Oui</span>
+                }
+                else
+                {
+                    <span>Non</span>
+                }
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photos)
-        </dt>
-    </dl>
-    @foreach (var photo in Model.Photos)
-    {
-        <img src="@Url.Content(photo.FilePath)" alt="@photo.FileName" height="200"/>
-    }
+            <dt>
+                @Html.DisplayNameFor(model => model.Photos)
+            </dt>
+        </dl>
+        @foreach (var photo in Model.Photos)
+        {
+            <img src="@Url.Content(photo.FilePath)" alt="@photo.FileName" height="200"/>
+        }
+    </div>
+    <div class="col-lg-6">
+        <h4>Animal</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Animal.Nom)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Animal.Nom)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Animal.Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Animal.Type.Libelle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Animal.Couleur)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Animal.Couleur)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Animal.Age)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Animal.Age)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Photos)
+            </dt>
+        </dl>
+        @foreach (var photo in Model.Animal.Photos)
+        {
+            <img src="@Url.Content(photo.FilePath)" alt="@photo.FileName" height="200"/>
+        }
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

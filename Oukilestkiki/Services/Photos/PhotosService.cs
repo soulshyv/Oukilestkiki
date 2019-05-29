@@ -41,7 +41,10 @@ namespace Oukilestkiki.Services.Photos
                     photo.Recherches.Add(db.Recherches.Find(prvm.Recherche.Id));
                 }
 
-                photo.Animal = db.Animaux.Find(prvm.Animal.Id);
+                if (prvm.Animal != null)
+                {
+                    photo.Animal = db.Animaux.Find(prvm.Animal.Id);
+                }
 
                 db.Photos.Add(photo);
 
