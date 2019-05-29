@@ -41,7 +41,10 @@ namespace Oukilestkiki.Controllers
         // GET: Recherches/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new RechercheCreateEditViewModel
+            {
+                Types = db.TypeAnimaux.ToList()
+            });
         }
 
         // POST: Recherches/Create
@@ -53,26 +56,32 @@ namespace Oukilestkiki.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var recherche = db.Recherches.Add(vm.Recherche);
-                //var animal = db.Animaux.Add(new Animal());
-                vm.Recherche.Animal = new Animal();
+                vm.Recherche.Animal.Type = db.TypeAnimaux.Find(vm.TypeId);
+                db.Animaux.Add(vm.Recherche.Animal);
+                db.Recherches.Add(vm.Recherche);
 
                 var photoService = new PhotosService();
                 var photosRecherche = photoService.Add(new PhotoRechercheViewModel
                 {
-                    Photos = vm.ImageFiles,
-                    Recherche = vm.Recherche,
+                    Photos = vm.ImageFilesRecherche,
+                    Recherche = vm.Recherche
+                });
+
+                var photosAnimal = photoService.Add(new PhotoRechercheViewModel
+                {
+                    Photos = vm.ImageFilesAnimal,
                     Animal = vm.Recherche.Animal
                 });
 
                 vm.Recherche.Photos = photosRecherche;
+                vm.Recherche.Animal.Photos = photosAnimal;
 
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
 
-            return View(vm);
+            return RedirectToAction("Create");
         }
 
         // GET: Recherches/Edit/5
@@ -89,7 +98,8 @@ namespace Oukilestkiki.Controllers
             }
             return View(new RechercheCreateEditViewModel
             {
-                Recherche = recherche
+                Recherche = recherche,
+                Types = db.TypeAnimaux.ToList()
             });
         }
 
@@ -118,7 +128,7 @@ namespace Oukilestkiki.Controllers
                 var photoService = new PhotosService();
                 var photos = photoService.UpdatePhotosRecherche(new PhotoRechercheViewModel
                 {
-                    Photos = vm.ImageFiles,
+                    Photos = vm.ImageFilesRecherche,
                     Recherche = recherche,
                     Animal = recherche.Animal
                 });

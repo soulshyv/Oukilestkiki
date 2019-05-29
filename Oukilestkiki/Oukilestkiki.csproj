@@ -218,6 +218,10 @@
     <Compile Include="Migrations\201905241239416_addAnnotation.Designer.cs">
       <DependentUpon>201905241239416_addAnnotation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905281338221_SetAgeNull.cs" />
+    <Compile Include="Migrations\201905281338221_SetAgeNull.Designer.cs">
+      <DependentUpon>201905281338221_SetAgeNull.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\Photos\Models\PhotoFileResult.cs" />
     <Compile Include="ViewModels\PhotoCreateViewModel.cs" />
@@ -233,7 +237,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -281,7 +284,6 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap-toggle.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -336,15 +338,13 @@
     <Content Include="Views\Photos\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\Erreur.cshtml" />
-
     <Content Include="Views\Recherches\Create.cshtml" />
     <Content Include="Views\Recherches\Delete.cshtml" />
     <Content Include="Views\Recherches\Details.cshtml" />
     <Content Include="Views\Recherches\Edit.cshtml" />
     <Content Include="Views\Recherches\Index.cshtml" />
-
     <Content Include="Views\Utilisateurs\Recherche.cshtml" />
-
+    <Content Include="Views\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -374,6 +374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905241239416_addAnnotation.resx">
       <DependentUpon>201905241239416_addAnnotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905281338221_SetAgeNull.resx">
+      <DependentUpon>201905281338221_SetAgeNull.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -2,10 +2,10 @@
 @model Oukilestkiki.ViewModels.RechercheCreateEditViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Création d'une recherche";
 }
 
-<h2>Create</h2>
+<h2>Création</h2>
 
 
 @using (Html.BeginForm("Create", "Recherches", FormMethod.Post, new { enctype = "multipart/form-data" })) 
@@ -13,37 +13,81 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Recherche</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Recherche.Localisation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Recherche.Localisation, new { @class = "form-control", @placeholder = "Région, département, ville, ..." })
-                @Html.ValidationMessageFor(model => model.Recherche.Localisation, "", new { @class = "text-danger" })
+        <div class="col-lg-6">
+            <h4>Recherche</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recherche.Localisation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Recherche.Localisation, new { @class = "form-control", @placeholder = "Région, département, ville, ..." })
+                    @Html.ValidationMessageFor(model => model.Recherche.Localisation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recherche.DerniereApparition, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Recherche.DerniereApparition, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Recherche.DerniereApparition, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recherche.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Recherche.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Recherche.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.ImageFilesRecherche, htmlAttributes: new { @class = "control-label" })
+                    <input type="file" name="@nameof(Model.ImageFilesRecherche)" multiple="multiple" required />
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Recherche.DerniereApparition, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Recherche.DerniereApparition, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Recherche.DerniereApparition, "", new { @class = "text-danger" })
+        <div class="col-lg-6">
+            <h4>Animal</h4>
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recherche.Animal.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.TypeId, Model.Types.Select(t => new SelectListItem{ Text = t.Libelle, Value = t.Id.ToString()}), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Recherche.Animal.Type, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Recherche.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Recherche.Description, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Recherche.Description, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recherche.Animal.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Recherche.Animal.Nom, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Recherche.Animal.Nom, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImageFiles, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="@nameof(Model.ImageFiles)" multiple="multiple" required />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recherche.Animal.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Recherche.Animal.Age, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Recherche.Animal.Age, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recherche.Animal.Couleur, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Recherche.Animal.Couleur, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Recherche.Animal.Couleur, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.ImageFilesAnimal, htmlAttributes: new { @class = "control-label" })
+                    <input type="file" name="@nameof(Model.ImageFilesAnimal)" multiple="multiple" required />
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -55,7 +99,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour à la liste", "Index")
 </div>
 
 @section Scripts {

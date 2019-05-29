@@ -9,7 +9,6 @@ namespace BO
     {
         public int Id { get; set; }
         public string Localisation { get; set; }
-        [Required]
         [Display(Name = "Dernière apparition")]
         public DateTime DerniereApparition { get; set; }
         public string Description { get; set; }

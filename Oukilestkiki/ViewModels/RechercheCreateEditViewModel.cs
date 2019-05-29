@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using BO;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Web;
-using BO;
 
 namespace Oukilestkiki.ViewModels
 {
@@ -9,7 +9,14 @@ namespace Oukilestkiki.ViewModels
     {
         public Recherche Recherche { get; set; }
 
-        [DisplayName("Photos")]
-        public HttpPostedFileBase[] ImageFiles { get; set; }
+        [DisplayName("Photos pour la recherche")]
+        public HttpPostedFileBase[] ImageFilesRecherche { get; set; }
+
+        [DisplayName("Photos de l'animal")]
+        public HttpPostedFileBase[] ImageFilesAnimal { get; set; }
+
+        public List<TypeAnimal> Types { get; set; }
+
+        public int TypeId { get; set; }
     }
 }
