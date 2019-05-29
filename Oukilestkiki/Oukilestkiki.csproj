@@ -222,9 +222,14 @@
     <Compile Include="Migrations\201905281338221_SetAgeNull.Designer.cs">
       <DependentUpon>201905281338221_SetAgeNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905291328092_UpdateTableMessages.cs" />
+    <Compile Include="Migrations\201905291328092_UpdateTableMessages.Designer.cs">
+      <DependentUpon>201905291328092_UpdateTableMessages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authentification.cs" />
     <Compile Include="Services\Photos\Models\PhotoFileResult.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\PhotoCreateViewModel.cs" />
     <Compile Include="ViewModels\PhotoRechercheViewModel.cs" />
     <Compile Include="Services\Photos\PhotosService.cs" />
@@ -345,7 +350,7 @@
     <Content Include="Views\Recherches\Edit.cshtml" />
     <Content Include="Views\Recherches\Index.cshtml" />
     <Content Include="Views\Utilisateurs\Recherche.cshtml" />
-    <Content Include="Views\Details.cshtml" />
+    <Content Include="Views\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -378,6 +383,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905281338221_SetAgeNull.resx">
       <DependentUpon>201905281338221_SetAgeNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291328092_UpdateTableMessages.resx">
+      <DependentUpon>201905291328092_UpdateTableMessages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

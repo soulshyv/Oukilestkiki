@@ -7,7 +7,7 @@ namespace Oukilestkiki.Models
     {
         public static bool EstConnecte()
         {
-            var user = (Utilisateur)HttpContext.Current.Session["Utilisateur"];
+            var user = GetSessionUtilisateur();
             if (user != null)
             {
                 if (user.Role.Libelle.Equals("Admin"))

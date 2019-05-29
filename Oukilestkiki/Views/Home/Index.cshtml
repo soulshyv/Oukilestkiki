@@ -1,31 +1,85 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model Oukilestkiki.ViewModels.MessageViewModel
+@{
+    ViewBag.Title = "Accueil";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<h2>Messagerie publique</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NewMessage.Expediteur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewMessage.Contenu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewMessage.DateEnvoi)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Messages)
+    {
+        <tr>
+            <td>
+                @if (item.Expediteur != null)
+                {
+                <span>[@Html.DisplayFor(modelItem => item.Expediteur.Role.Libelle)] @Html.DisplayFor(modelItem => item.Expediteur.NomComplet)</span>
+                }
+                else
+                {
+                    <span>Anonyme</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contenu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEnvoi)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+    @using (Html.BeginForm("EnvoyerMessage", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-11">
+                @Html.TextAreaFor(model => model.NewMessage.Contenu, new { @class = "form-control fullwidth", placeholder = "Contenu du message" })
+                @Html.ValidationMessageFor(model => model.NewMessage.Contenu, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-1">
+                <input type="submit" value="Envoyer" class="btn btn-default" />
+            </div>
+        </div>
+    }
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        // Change the selector if needed
+        var $table = $('table'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+         // Get the tbody columns width array
+        colWidth = $bodyCells.map(function() {
+            return $(this).width();
+        }).get();
+
+        // Set the width of thead columns
+        $table.find('thead tr').children().each(function(i, v) {
+            $(v).width(colWidth[i]);
+        }); 
+    </script>
+
+}

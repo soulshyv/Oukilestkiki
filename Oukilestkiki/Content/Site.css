@@ -23,6 +23,10 @@ textarea {
     max-width: 280px;
 }
 
+textarea.fullwidth {
+    max-width: 100%;
+}
+
 .d-none {
     visibility: hidden
 }
