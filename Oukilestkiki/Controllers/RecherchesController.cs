@@ -23,6 +23,51 @@ namespace Oukilestkiki.Controllers
             return View(db.Recherches.ToList());
         }
 
+        [HttpPost]
+        public ActionResult Index(string nom)
+        {
+            var ListeAnimals = db.Animaux.ToList();
+            var ListeLieux = db.Recherches.Select(recherche => recherche.Localisation).ToList();
+            var ListeRecherche = db.Recherches.ToList();
+            var ListeRechercheFinal = new List<Recherche>();
+            if (nom.Contains(" "))
+            {
+                var mot1 = nom.Split(' ');
+                if (mot1.Length >= 2)
+                {
+                    ListeAnimals.ForEach(animal =>
+                    {
+                        foreach (var prenom in mot1)
+                        {
+                            if (animal.Nom.ToLower().Equals(prenom) || animal.Type.Libelle.ToLower().Equals(prenom))
+                            {
+                                //var rechercheEnCours = db.Recherches.Where(r => r.Animal.Id == animal.Id);
+                                var rechercheEnCours = db.Recherches.Find(animal.Id);
+                                if (rechercheEnCours != null)
+                                {
+                                    ListeRecherche.Add(rechercheEnCours);
+                                }
+                            }
+                        }
+                    }
+                    );
+                }
+            }
+            else
+            {
+                ListeRecherche.ForEach(recherche =>
+                {
+                    if (recherche.Localisation != null)
+                    {
+                        if (recherche.Localisation.ToLower().Equals(nom.ToLower()))
+                        {
+                            ListeRechercheFinal.Add(recherche);
+                        }
+                    }
+                });
+            }
+            return View(ListeRechercheFinal);
+        }
         // GET: Recherches/Details/5
         public ActionResult Details(int? id)
         {
