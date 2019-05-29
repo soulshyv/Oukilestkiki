@@ -24,6 +24,40 @@ namespace Oukilestkiki.Controllers
             return View(db.Recherches.ToList());
         }
 
+        [HttpPost]
+        public ActionResult Index(string nom)
+        {
+            var ListeRecherche = db.Recherches.ToList();
+            var ListeRechercheFinal = new List<Recherche>();
+            var mot1 = nom.Split(' ');
+
+            ListeRecherche.ForEach(recherche =>
+            {
+                foreach (var critere in mot1)
+                {
+                    if (recherche.Localisation != null)
+                    {
+                        if (recherche.Localisation.ToLower().Equals(critere.ToLower()))
+                        {
+                            ListeRechercheFinal.Add(recherche);
+                        }
+                    }
+
+                    if (recherche.Animal.Nom != null)
+                    {
+                        if (recherche.Animal.Nom.ToLower().Contains(critere.ToLower()))
+                        {
+                            if (ListeRechercheFinal.All(element => element.Id != recherche.Id))
+                            {
+                                ListeRechercheFinal.Add(recherche);
+                            }
+                        }
+                    }
+                }
+            });
+
+            return View(ListeRechercheFinal);
+        }
         // GET: Recherches/Details/5
         public ActionResult Details(int? id)
         {
