@@ -28,6 +28,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Active)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Animal)
+        </th>
         <th></th>
     </tr>
 
@@ -44,6 +47,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Active)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Animal.Nom)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
