@@ -223,6 +223,7 @@
       <DependentUpon>201905281338221_SetAgeNull.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Authentification.cs" />
     <Compile Include="Services\Photos\Models\PhotoFileResult.cs" />
     <Compile Include="ViewModels\PhotoCreateViewModel.cs" />
     <Compile Include="ViewModels\PhotoRechercheViewModel.cs" />
