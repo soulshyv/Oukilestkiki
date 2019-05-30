@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BO;
 using Oukilestkiki.Enums;
 using Oukilestkiki.Models;
+using Oukilestkiki.Services.Photos;
 using Oukilestkiki.ViewModels;
 
 namespace Oukilestkiki.Controllers
@@ -25,12 +27,27 @@ namespace Oukilestkiki.Controllers
         {
             if (ModelState.IsValid)
             {
-                mvm.NewMessage.DateEnvoi = DateTime.Now;
                 var utilisateur = Authentification.GetSessionUtilisateur();
-                mvm.NewMessage.Expediteur = db.Utilisateurs.Find(utilisateur.Id);
-                mvm.NewMessage.Type = TypeMessageEnum.Public;
+                var message = new Message
+                {
+                    Contenu = mvm.ContenuMessage,
+                    DateEnvoi = DateTime.Now,
+                    Expediteur = db.Utilisateurs.Find(utilisateur.Id),
+                    Type = TypeMessageEnum.Public
+                };
 
-                db.Messages.Add(mvm.NewMessage);
+                db.Messages.Add(message);
+
+                db.SaveChanges();
+
+                var photoService = new PhotosService();
+                var photos = photoService.Add(new PhotoRechercheViewModel
+                {
+                    Photos = mvm.PiecesJointes,
+                    Message = message
+                });
+
+                message.PiecesJointes.AddRange(photos.Select(p => db.Photos.Find(p.Id)));
 
                 db.SaveChanges();
             }

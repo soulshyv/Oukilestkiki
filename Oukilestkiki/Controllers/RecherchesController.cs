@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BO;
 using Oukilestkiki;
+using Oukilestkiki.Enums;
 using Oukilestkiki.Models;
 using Oukilestkiki.Services.Photos;
 using Oukilestkiki.ViewModels;
@@ -70,7 +71,11 @@ namespace Oukilestkiki.Controllers
             {
                 return HttpNotFound();
             }
-            return View(recherche);
+
+            return View(new RechercheDetailsContactViewModel
+            {
+                Recherche = recherche
+            });
         }
 
         // GET: Recherches/Create
@@ -138,6 +143,12 @@ namespace Oukilestkiki.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (Authentification.GetSessionUtilisateur()?.Id != recherche.Animal.Maitre.Id)
+            {
+                return View("Error");
+            }
+
             return View(new RechercheCreateEditViewModel
             {
                 Recherche = recherche,
@@ -159,6 +170,11 @@ namespace Oukilestkiki.Controllers
                 if (recherche == null)
                 {
                     return HttpNotFound();
+                }
+
+                if (Authentification.GetSessionUtilisateur()?.Id != recherche.Animal.Maitre.Id)
+                {
+                    return View("Error");
                 }
 
                 recherche.Active = vm.Recherche.Active;
@@ -197,10 +213,17 @@ namespace Oukilestkiki.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var recherche = db.Recherches.Find(id);
+
             if (recherche == null)
             {
                 return HttpNotFound();
             }
+
+            if (Authentification.GetSessionUtilisateur()?.Id != recherche.Animal.Maitre.Id)
+            {
+                return View("Error");
+            }
+
             return View(recherche);
         }
 
@@ -210,6 +233,17 @@ namespace Oukilestkiki.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var recherche = db.Recherches.Find(id);
+
+            if (recherche == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (Authentification.GetSessionUtilisateur()?.Id != recherche.Animal.Maitre.Id)
+            {
+                return View("Error");
+            }
+
             db.Recherches.Remove(recherche);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -222,6 +256,49 @@ namespace Oukilestkiki.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Contacter(RechercheDetailsContactViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var recherche = db.Recherches.Find(vm.Recherche.Id);
+
+                if (recherche == null)
+                {
+                    return HttpNotFound();
+                }
+
+                var auteur = db.Utilisateurs.Find(vm.Recherche.Animal.Maitre.Id);
+
+                var message = new Message
+                {
+                    Contenu = vm.ContenuMessage,
+                    DateEnvoi = DateTime.Now,
+                    Expediteur = Authentification.GetSessionUtilisateur(),
+                    Destinataire = auteur,
+                    Recherche = recherche,
+                    Type = TypeMessageEnum.Privé
+                };
+
+                db.Messages.Add(message);
+
+                db.SaveChanges();
+
+                var photoService = new PhotosService();
+                var photos = photoService.Add(new PhotoRechercheViewModel
+                {
+                    Photos = vm.PiecesJointes,
+                    Message = message
+                });
+
+                message.PiecesJointes.AddRange(photos.Select(p => db.Photos.Find(p.Id)));
+                recherche.Messages.Add(message);
+
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Details", new {vm.Recherche.Id});
         }
     }
 }

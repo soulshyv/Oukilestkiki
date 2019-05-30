@@ -9,13 +9,13 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.NewMessage.Expediteur)
+            @Html.DisplayNameFor(model => model.ContenuMessage.Expediteur)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NewMessage.Contenu)
+            @Html.DisplayNameFor(model => model.ContenuMessage.Contenu)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NewMessage.DateEnvoi)
+            @Html.DisplayNameFor(model => model.ContenuMessage.DateEnvoi)
         </th>
         <th></th>
     </tr>
@@ -52,12 +52,19 @@
 
         <div class="form-group">
             <div class="col-md-11">
-                @Html.TextAreaFor(model => model.NewMessage.Contenu, new { @class = "form-control fullwidth", placeholder = "Contenu du message" })
-                @Html.ValidationMessageFor(model => model.NewMessage.Contenu, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.ContenuMessage, new { @class = "form-control fullwidth", placeholder = "Contenu du message" })
+                @Html.ValidationMessageFor(model => model.ContenuMessage, "", new { @class = "text-danger" })
             </div>
-            <div class="col-lg-1">
-                <input type="submit" value="Envoyer" class="btn btn-default" />
+        </div>
+                    
+        <div class="form-group">
+            @Html.LabelFor(model => model.PiecesJointes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="@nameof(Model.PiecesJointes)" multiple="multiple" required />
             </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="submit" value="Envoyer" class="btn btn-default" />
         </div>
     }
 </div>

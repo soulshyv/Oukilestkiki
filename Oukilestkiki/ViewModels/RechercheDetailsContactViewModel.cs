@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.Web;
 using BO;
 
 namespace Oukilestkiki.ViewModels
 {
-    public class MessageViewModel
+    public class RechercheDetailsContactViewModel
     {
-        public List<Message> Messages { get; set; }
+        public Recherche Recherche { get; set; }
+
         public string ContenuMessage { get; set; }
+
+        [DisplayName("Pièces jointes")]
         public HttpPostedFileBase[] PiecesJointes { get; set; }
     }
 }

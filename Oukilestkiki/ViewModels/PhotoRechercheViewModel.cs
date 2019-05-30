@@ -9,5 +9,6 @@ namespace Oukilestkiki.ViewModels
         public HttpPostedFileBase[] Photos { get; set; }
         public Recherche Recherche { get; set; }
         public Animal Animal { get; set; }
+        public Message Message { get; set; }
     }
 }

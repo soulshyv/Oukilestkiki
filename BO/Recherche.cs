@@ -15,5 +15,6 @@ namespace BO
         public bool Active { get; set; } = true;
         public virtual Animal Animal { get; set; }
         public virtual List<Photo> Photos { get; set; }
+        public virtual List<Message> Messages { get; set; }
     }
 }
