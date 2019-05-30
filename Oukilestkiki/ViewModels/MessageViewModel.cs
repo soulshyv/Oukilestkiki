@@ -9,5 +9,8 @@ namespace Oukilestkiki.ViewModels
         public List<Message> Messages { get; set; }
         public string ContenuMessage { get; set; }
         public HttpPostedFileBase[] PiecesJointes { get; set; }
+
+        // Pour les labels
+        public Message Message { get; set; }
     }
 }

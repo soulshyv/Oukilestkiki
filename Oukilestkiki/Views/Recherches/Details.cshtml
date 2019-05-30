@@ -141,16 +141,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ContenuMessage.Expediteur)
+                @Html.DisplayNameFor(model => model.Message.Expediteur)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContenuMessage.Contenu)
+                @Html.DisplayNameFor(model => model.Message.Contenu)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContenuMessage.PiecesJointes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContenuMessage.DateEnvoi)
+                @Html.DisplayNameFor(model => model.Message.PiecesJointes)
             </th>
             <th></th>
         </tr>
@@ -162,7 +159,7 @@
             <td>
                 @if (item.Expediteur != null)
                 {
-                    <span>@Html.DisplayFor(modelItem => item.Expediteur.NomComplet)</span>
+                    @Html.DisplayFor(modelItem => item.Expediteur.NomComplet)
                 }
                 else
                 {
@@ -170,16 +167,14 @@
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Contenu)
+                @Html.DisplayFor(modelItem => item.Contenu)<br />
+                @Html.DisplayNameFor(model => item.DateEnvoi) : @Html.DisplayFor(modelItem => item.DateEnvoi)
             </td>
             <td>
                 @foreach (var photo in Model.Recherche.Photos)
                 {
-                    <span class="line" value="@photo.Id"><a href="@Url.Content(photo.FilePath)" target="_blank">@photo.FileName</a></span>
+                    <a href="@Url.Content(photo.FilePath)" target="_blank">@photo.FileName</a>
                 }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateEnvoi)
             </td>
         </tr>
     }

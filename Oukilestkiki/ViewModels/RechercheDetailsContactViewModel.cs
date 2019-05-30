@@ -12,5 +12,8 @@ namespace Oukilestkiki.ViewModels
 
         [DisplayName("Pièces jointes")]
         public HttpPostedFileBase[] PiecesJointes { get; set; }
+
+        // Pour les labels
+        public Message Message { get; set; }
     }
 }
