@@ -235,6 +235,7 @@
     <Compile Include="Services\Photos\PhotosService.cs" />
     <Compile Include="Services\Photos\FileManagerService.cs" />
     <Compile Include="ViewModels\RechercheCreateEditViewModel.cs" />
+    <Compile Include="ViewModels\RechercheDetailsContactViewModel.cs" />
     <Compile Include="ViewModels\UtilisateurCreateEditVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
