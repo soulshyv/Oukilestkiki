@@ -161,10 +161,25 @@ namespace Oukilestkiki.Controllers
                     return HttpNotFound();
                 }
 
+                var animal = db.Animaux.Find(recherche.Animal.Id);
+
+                if(animal == null)
+                {
+                    return HttpNotFound();
+                }
+
                 recherche.Active = vm.Recherche.Active;
                 recherche.DerniereApparition = vm.Recherche.DerniereApparition;
                 recherche.Description = vm.Recherche.Description;
                 recherche.Localisation = vm.Recherche.Localisation;
+
+                db.SaveChanges();
+
+                animal.Age = vm.Recherche.Animal.Age;
+                animal.Couleur = vm.Recherche.Animal.Couleur;
+                animal.Type = db.TypeAnimaux.Find(vm.TypeId);
+                animal.Nom = vm.Recherche.Animal.Nom;
+
                 db.SaveChanges();
 
                 var photoService = new PhotosService();

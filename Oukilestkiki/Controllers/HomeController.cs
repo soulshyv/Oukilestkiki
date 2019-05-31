@@ -27,7 +27,7 @@ namespace Oukilestkiki.Controllers
             {
                 mvm.NewMessage.DateEnvoi = DateTime.Now;
                 var utilisateur = Authentification.GetSessionUtilisateur();
-                mvm.NewMessage.Expediteur = db.Utilisateurs.Find(utilisateur.Id);
+                mvm.NewMessage.Expediteur = db.Utilisateurs.Find(utilisateur?.Id);
                 mvm.NewMessage.Type = TypeMessageEnum.Public;
 
                 db.Messages.Add(mvm.NewMessage);

@@ -20,6 +20,12 @@ namespace Oukilestkiki.Controllers
         public ActionResult Login(Utilisateur utilisateur)
         {
             var userConnect = db.Utilisateurs.FirstOrDefault(user => user.Mail == utilisateur.Mail);
+
+            if (userConnect == null)
+            {
+                return RedirectToAction("Login");
+            }
+
             if (userConnect.Password == utilisateur.Password)
             {
                 Session["Utilisateur"] = userConnect;
