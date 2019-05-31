@@ -10,6 +10,5 @@ namespace BO
         public string FilePath { get; set; }
         public virtual Animal Animal { get; set; }
         public virtual List<Recherche> Recherches { get; set; }
-        public virtual Message Message { get; set; }
     }
 }

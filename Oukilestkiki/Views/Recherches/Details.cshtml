@@ -1,6 +1,5 @@
-﻿@using System.Web.UI.WebControls
-@using Oukilestkiki.Models
-@model Oukilestkiki.ViewModels.RechercheDetailsContactViewModel
+﻿@model BO.Recherche
+
 @{
     ViewBag.Title = "Details de la recherche";
 }
@@ -10,53 +9,38 @@
 <div>
     <div class="col-lg-6">
         <h4>Recherche</h4>
-
-        @{
-            var sessionUtilisateur = Authentification.GetSessionUtilisateur();
-        }
-
-        @{
-            var animalMaitre = Model.Recherche.Animal.Maitre;
-        }
-        @* Si la recherche est un utilisateur enregistré ET
-           qqn est authentifié ET
-           l'utilisateur authentifié n'est pas l'auteur de la recherche *@
-        @if (animalMaitre != null && sessionUtilisateur != null && sessionUtilisateur.Id != animalMaitre.Id)
-        {
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalContact">Envoyer un message au créateur de la recherche</button>
-        }
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Localisation)
+                @Html.DisplayNameFor(model => model.Localisation)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Recherche.Localisation)
+                @Html.DisplayFor(model => model.Localisation)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.DerniereApparition)
+                @Html.DisplayNameFor(model => model.DerniereApparition)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Recherche.DerniereApparition)
+                @Html.DisplayFor(model => model.DerniereApparition)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Description)
+                @Html.DisplayNameFor(model => model.Description)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Recherche.Description)
+                @Html.DisplayFor(model => model.Description)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Active)
+                @Html.DisplayNameFor(model => model.Active)
             </dt>
 
             <dd>
-                @if (Model.Recherche.Active)
+                @if (Model.Active)
                 {
                     <span>Oui</span>
                 }
@@ -67,12 +51,12 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Photos)
+                @Html.DisplayNameFor(model => model.Photos)
             </dt>
         </dl>
-        @foreach (var photo in Model.Recherche.Photos)
+        @foreach (var photo in Model.Photos)
         {
-            <img src="@Url.Content(photo.FilePath)" alt="@photo.FileName" height="200" />
+            <img src="@Url.Content(photo.FilePath)" alt="@photo.FileName" height="200"/>
         }
     </div>
     <div class="col-lg-6">
@@ -80,168 +64,56 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Animal.Nom)
+                @Html.DisplayNameFor(model => model.Animal.Nom)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Recherche.Animal.Nom)
+                @Html.DisplayFor(model => model.Animal.Nom)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Animal.Type)
+                @Html.DisplayNameFor(model => model.Animal.Type)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Recherche.Animal.Type.Libelle)
+                @Html.DisplayFor(model => model.Animal.Type.Libelle)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Animal.Couleur)
+                @Html.DisplayNameFor(model => model.Animal.Couleur)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Recherche.Animal.Couleur)
+                @Html.DisplayFor(model => model.Animal.Couleur)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Animal.Age)
+                @Html.DisplayNameFor(model => model.Animal.Age)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Recherche.Animal.Age)
+                @Html.DisplayFor(model => model.Animal.Age)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Animal.Maitre)
+                @Html.DisplayNameFor(model => model.Animal.Maitre)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Recherche.Animal.Maitre.NomComplet)
+                @Html.DisplayFor(model => model.Animal.Maitre.NomComplet)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Recherche.Photos)
+                @Html.DisplayNameFor(model => model.Photos)
             </dt>
         </dl>
-        @foreach (var photo in Model.Recherche.Animal.Photos)
+        @foreach (var photo in Model.Animal.Photos)
         {
             <img src="@Url.Content(photo.FilePath)" alt="@photo.FileName" height="200"/>
         }
     </div>
 </div>
 <p>
-    @if (Authentification.GetSessionUtilisateur().Id == Model.Recherche.Animal.Maitre.Id)
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Recherche.Id })
-    }
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Message.Expediteur)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Message.Contenu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Message.PiecesJointes)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.Recherche.Messages)
-    {
-        <tr>
-            <td>
-                @if (item.Expediteur != null)
-                {
-                    @Html.DisplayFor(modelItem => item.Expediteur.NomComplet)
-                }
-                else
-                {
-                    <span>Anonyme</span>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contenu)<br />
-                @Html.DisplayNameFor(model => item.DateEnvoi) : @Html.DisplayFor(modelItem => item.DateEnvoi)
-            </td>
-            <td>
-                @foreach (var photo in Model.Recherche.Photos)
-                {
-                    <a href="@Url.Content(photo.FilePath)" target="_blank">@photo.FileName</a>
-                }
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
-
-<div id="modalContact" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Envoyer un message</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Contacter", "Recherches", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-
-                    @Html.HiddenFor(model => model.Recherche.Id)
-                    
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ContenuMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.ContenuMessage, new { htmlAttributes = new { @class = "form-control fullwidth", placeholder = "Contenu du message" } })
-                            @Html.ValidationMessageFor(model => model.ContenuMessage, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PiecesJointes, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <input type="file" name="@nameof(Model.PiecesJointes)" multiple="multiple" required />
-                        </div>
-                    </div>
-
-                    <input type="submit" value="Envoyer" class="btn btn-default"/>
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-    <script type="text/javascript">
-        // Change the selector if needed
-        var $table = $('table'),
-            $bodyCells = $table.find('tbody tr:first').children(),
-            colWidth;
-
-        // Get the tbody columns width array
-        colWidth = $bodyCells.map(function() {
-            return $(this).width();
-        }).get();
-
-        // Set the width of thead columns
-        $table.find('thead tr').children().each(function(i, v) {
-            $(v).width(colWidth[i]);
-        }); 
-    </script>
-
-}

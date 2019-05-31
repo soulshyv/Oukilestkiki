@@ -9,13 +9,13 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Message.Expediteur)
+            @Html.DisplayNameFor(model => model.NewMessage.Expediteur)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Message.Contenu)
+            @Html.DisplayNameFor(model => model.NewMessage.Contenu)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Message.PiecesJointes)
+            @Html.DisplayNameFor(model => model.NewMessage.DateEnvoi)
         </th>
         <th></th>
     </tr>
@@ -27,7 +27,7 @@
             <td>
                 @if (item.Expediteur != null)
                 {
-                    <span>[@Html.DisplayFor(modelItem => item.Expediteur.Role.Libelle)] @Html.DisplayFor(modelItem => item.Expediteur.NomComplet)</span>
+                <span>[@Html.DisplayFor(modelItem => item.Expediteur.Role.Libelle)] @Html.DisplayFor(modelItem => item.Expediteur.NomComplet)</span>
                 }
                 else
                 {
@@ -35,14 +35,10 @@
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Contenu)<br />
-                @Html.DisplayNameFor(model => model.Message.DateEnvoi) : @Html.DisplayFor(modelItem => item.DateEnvoi)
+                @Html.DisplayFor(modelItem => item.Contenu)
             </td>
             <td>
-                @foreach (var photo in item.PiecesJointes)
-                {
-                    <a href="@Url.Content(photo.FilePath)" target="_blank">@photo.FileName</a>
-                }
+                @Html.DisplayFor(modelItem => item.DateEnvoi)
             </td>
         </tr>
     }
@@ -56,19 +52,12 @@
 
         <div class="form-group">
             <div class="col-md-11">
-                @Html.TextAreaFor(model => model.ContenuMessage, new { @class = "form-control fullwidth", placeholder = "Contenu du message" })
-                @Html.ValidationMessageFor(model => model.ContenuMessage, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.NewMessage.Contenu, new { @class = "form-control fullwidth", placeholder = "Contenu du message" })
+                @Html.ValidationMessageFor(model => model.NewMessage.Contenu, "", new { @class = "text-danger" })
             </div>
-        </div>
-                    
-        <div class="form-group">
-            @Html.LabelFor(model => model.PiecesJointes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="@nameof(Model.PiecesJointes)" multiple="multiple" required />
+            <div class="col-lg-1">
+                <input type="submit" value="Envoyer" class="btn btn-default" />
             </div>
-        </div>
-        <div class="col-lg-1">
-            <input type="submit" value="Envoyer" class="btn btn-default" />
         </div>
     }
 </div>
